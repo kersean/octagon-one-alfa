@@ -1,0 +1,164 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "last-build" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+
+                      - name: Upload a Build Artifact
+  uses: actions/upload-artifact@v4.6.1
+  with:
+    # Artifact name
+    name: # optional, default is artifact
+    # A file, directory or wildcard pattern that describes what to upload
+    path: 
+    # The desired behavior if no files are found using the provided path.
+Available Options:
+  warn: Output a warning but do not fail the action
+  error: Fail the action with an error message
+  ignore: Do not output any warnings or errors, the action does not fail
+
+    if-no-files-found:
+    # Optional, default is warn. Duration after which artifact will expire in days. 0 means using default retention. Minimum 1 day. Maximum 90 days unless changed from the repository settings page.
+
+    retention-days: # optional
+    # The level of compression for Zlib to be applied to the artifact archive. The value can range from 0 to 9: - 0: No compression - 1: Best speed - 6: Default compression (same as GNU Gzip) - 9: Best compression Higher levels will result in better compression, but will take longer to complete. For large files that are not easily compressed, a value of 0 is recommended for significantly faster uploads.
+
+    compression-level: # optional, default is 6
+    # If true, an artifact with a matching name will be deleted before a new one is uploaded. If false, the action will fail if an artifact for the given name already exists. Does not fail if the artifact does not exist.
+
+    overwrite: # optional, default is false
+    # If true, hidden files will be included in the artifact. If false, hidden files will be excluded from the artifact.
+
+    include-hidden-files: # optional, default is false
+
+                - name: Cache
+  uses: actions/cache@v3.4.3
+  with:
+    # A list of files, directories, and wildcard patterns to cache and restore
+    path: 
+    # An explicit key for restoring and saving the cache
+    key: 
+    # An ordered list of keys to use for restoring stale cache if no cache hit occurred for key. Note `cache-hit` returns false in this case.
+    restore-keys: # optional
+    # The chunk size used to split up large files during upload, in bytes
+    upload-chunk-size: # optional
+    # An optional boolean when enabled, allows windows runners to save or restore caches that can be restored or saved respectively on other platforms
+    enableCrossOsArchive: # optional, default is false
+    # Fail the workflow if cache entry is not found
+    fail-on-cache-miss: # optional, default is false
+    # Check if a cache entry exists for the given input(s) (key, restore-keys) without downloading the cache
+    lookup-only: # optional, default is false
+          
+                      - name: Build Jekyll for GitHub Pages
+  uses: actions/jekyll-build-pages@v1.0.13
+  with:
+    # Directory where the source files reside.
+    source: # optional, default is ./
+    # Output directory of the build. Although it can be nested inside the source, it cannot be the same as the source directory.
+    destination: # optional, default is ./_site
+    # Publishes posts with a future date. When set to true, the build is made with the --future option which overrides the future option that may be set in a Jekyll configuration file.
+    future: # optional
+    # The SHA-1 of the git commit for which the build is running. Default to GITHUB_SHA.
+    build_revision: # optional, default is ${{ github.sha }}
+    # Verbose output
+    verbose: # optional, default is true
+    # GitHub token
+    token: # default is ${{ github.token }}
+          
+            - name: Dependency Review
+  uses: actions/dependency-review-action@v4.5.0
+  with:
+    # Token for the repository. Can be passed in using `{{ secrets.GITHUB_TOKEN }}`.
+    repo-token: # optional, default is ${{ github.token }}
+    # Don't block PRs below this severity. Possible values are `low`, `moderate`, `high`, `critical`.
+    fail-on-severity: # optional
+    # Dependency scopes to block PRs on. Comma-separated list. Possible values are 'unknown', 'runtime', and 'development' (e.g. "runtime, development")
+    fail-on-scopes: # optional
+    # The base git ref to be used for this check. Has a default value when the workflow event is `pull_request` or `pull_request_target`. Must be provided otherwise.
+    base-ref: # optional
+    # The head git ref to be used for this check. Has a default value when the workflow event is `pull_request` or `pull_request_target`. Must be provided otherwise.
+    head-ref: # optional
+    # A path to the configuration file for the action.
+    config-file: # optional
+    # Comma-separated list of allowed licenses (e.g. "MIT, GPL 3.0, BSD 2 Clause")
+    allow-licenses: # optional
+    # Comma-separated list of forbidden licenses (e.g. "MIT, GPL 3.0, BSD 2 Clause")
+    deny-licenses: # optional
+    # Comma-separated list of dependencies in purl format (e.g. "pkg:npm/express, pkg:pypi/pycrypto"). These dependencies will be permitted to use any license, no matter what license policy is enforced otherwise.
+    allow-dependencies-licenses: # optional
+    # Comma-separated list of allowed GitHub Advisory IDs (e.g. "GHSA-abcd-1234-5679, GHSA-efgh-1234-5679")
+    allow-ghsas: # optional
+    # A token for fetching external configuration file if it lives in another repository. It is required if the repository is private
+    external-repo-token: # optional
+    # A boolean to determine if license checks should be performed
+    license-check: # optional
+    # A boolean to determine if vulnerability checks should be performed
+    vulnerability-check: # optional
+    # Determines if the summary is posted as a comment in the PR itself. Setting this to `always` or `on-failure` requires you to give the workflow the write permissions for pull-requests
+    comment-summary-in-pr: # optional
+    # A comma-separated list of package URLs to deny (e.g. "pkg:npm/express, pkg:pypi/pycrypto"). If version specified, only deny matching packages and version; else, deny all regardless of version.
+    deny-packages: # optional
+    # A comma-separated list of package URLs for group(s)/namespace(s) to deny (e.g. "pkg:npm/express/, pkg:pypi/pycrypto/"). Please note that the group name must be followed by a `/`.
+    deny-groups: # optional
+    # Whether to retry on snapshot warnings
+    retry-on-snapshot-warnings: # optional
+    # Number of seconds to wait before stopping snapshot retries.
+    retry-on-snapshot-warnings-timeout: # optional
+    # When set to `true` this action will always complete with success, overriding the `fail-on-severity` parameter.
+    warn-only: # optional
+    # Show a summary of the OpenSSF Scorecard scores.
+    show-openssf-scorecard: # optional
+    # Numeric threshold for the OpenSSF Scorecard score. If the score is below this threshold, the action will warn you.
+    warn-on-openssf-scorecard-level: # optional
+          
+              - name: action-updater
+  # You may pin to the exact commit or the version.
+  # uses: vsoch/action-updater@909ee9b5c2b88b3bba79a70a248b575f7994f79b
+  uses: vsoch/action-updater@0.0.16
+  with:
+    # GitHub token
+    token: # optional
+    # Choose named updaters to run (comma separated value, no spaces)
+    updaters: # optional
+    # path to file or directory to check
+    path: # optional, default is .github/workflows
+    # custom settings file for updater
+    settings_file: # optional
+    # additional args to provide to 'detect' or 'update' commands
+    args: # optional
+    # release of updater to use
+    version: # optional
+    # allow a failure (only relevant if pull_request is false)
+    allow_fail: # optional
+          

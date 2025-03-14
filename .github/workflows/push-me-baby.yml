@@ -36,13 +36,18 @@ jobs:
           echo test, and deploy your project.
 
                       - name: Upload a Build Artifact
+  
   uses: actions/upload-artifact@v4.6.1
+  
   with:
     # Artifact name
+    
     name: # optional, default is artifact
+    
     # A file, directory or wildcard pattern that describes what to upload
     path: 
     # The desired behavior if no files are found using the provided path.
+    
 Available Options:
   warn: Output a warning but do not fail the action
   error: Fail the action with an error message
@@ -81,8 +86,9 @@ Available Options:
     lookup-only: # optional, default is false
           
                       - name: Build Jekyll for GitHub Pages
-  uses: actions/jekyll-build-pages@v1.0.13
-  with:
+uses: actions/jekyll-build-pages@v1.0.13
+
+with:
     # Directory where the source files reside.
     source: # optional, default is ./
     # Output directory of the build. Although it can be nested inside the source, it cannot be the same as the source directory.

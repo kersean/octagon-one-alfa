@@ -1,0 +1,36 @@
+name: Create new static page (html) 
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  create_html_page:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Create empty HTML file
+        run: |
+          echo "<!DOCTYPE html>" > index.html
+          echo "<html lang='en'>" >> index.html
+          echo "<head>" >> index.html
+          echo "  <meta charset='UTF-8'>" >> index.html
+          echo "  <meta name='viewport' content='width=device-width, initial-scale=1.0'>" >> index.html
+          echo "  <title>Empty Page</title>" >> index.html
+          echo "</head>" >> index.html
+          echo "<body>" >> index.html
+          echo "  <h1>Welcome to the Empty HTML Page</h1>" >> index.html
+          echo "</body>" >> index.html
+          echo "</html>" >> index.html
+
+      - name: Commit and push changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: github-actions
+          author_email: github-actions@github.com
+          message: "Create empty HTML page"
